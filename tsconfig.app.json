@@ -26,5 +26,5 @@
     /* Paths */
     "baseUrl": "./src"
   },
-  "include": ["src"]
+  "include": ["**/*.d.ts", "src"]
 }
