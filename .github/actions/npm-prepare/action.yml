@@ -1,0 +1,27 @@
+name: 'Prepares for npm scripts'
+description: 'This workflow prepares job to execute npm script commands like `npm run build`, `npm run lint`'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+
+    - name: Install NPM
+      run: npm install -g "npm@$(jq -r .engines.npm ./package.json)"
+      shell: bash
+
+    - name: Print Node.js and NPM context
+      run: |
+        echo "Expected Node.js version: $(jq -r .engines.node ./package.json)"
+        echo "Actual Node.js version: $(node -v)"
+        echo "Expected NPM version: $(jq -r .engines.npm ./package.json)"
+        echo "Actual NPM version: $(npm -v)"
+      shell: bash
+
+    - name: Install dependencies ⚙️
+      run: npm ci --ignore-scripts
+      shell: bash

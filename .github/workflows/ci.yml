@@ -1,0 +1,143 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+  pull_request:
+    branches:
+      - '*'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      # First three are default, this one is added to run CI on PRs that are moved from draft to ready for review
+      # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+      - ready_for_review
+
+# Avoid concurrency on the same branch to prevent parallel runs
+# Skip this for develop and main branches, since we don't want to break releases
+# to dev-stg: develop, stg: main and prod: latest tag on main branch
+concurrency:
+  group: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && format('no-concurrency-{0}', github.run_id) || format('{0}-{1}', github.workflow, github.ref) }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+jobs:
+  #  # Uncomment this to test the workflows and see CI context
+  #  CI-Context:
+  #    name: CI Context check
+  #
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - name: Dump context
+  #        env:
+  #          GITHUB_CONTEXT: ${{ toJson(github) }}
+  #          JOB_CONTEXT: ${{ toJson(job) }}
+  #          STEPS_CONTEXT: ${{ toJson(steps) }}
+  #        run: |
+  #          echo "$GITHUB_CONTEXT"
+  #          echo "$JOB_CONTEXT"
+  #          echo "$STEPS_CONTEXT"
+
+  linters:
+    name: Linters
+
+    runs-on: ubuntu-latest
+
+    # Important conditions, since all following jobs depend on this job and do not check for these conditions again
+    # Run for any push event or PR but skip draft PRs
+    if: >-
+      ${{
+        github.event_name == 'push' ||
+        (github.event_name == 'pull_request' && github.event.pull_request.draft == false)
+      }}
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: NPM prepare ⚙️
+        uses: ./.github/actions/npm-prepare
+
+      - name: Run linter 🧹🧼
+        run: npm run lint
+
+  build:
+    name: Build
+
+    needs:
+      - linters
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: NPM prepare ⚙️
+        uses: ./.github/actions/npm-prepare
+
+      - name: Run build ⚒️
+        run: npm run build
+
+  unit-tests:
+    name: Unit Tests (Jest/RTL)
+
+    needs:
+      - build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: NPM prepare ⚙️
+        uses: ./.github/actions/npm-prepare
+
+      - name: Run tests and generate coverage report 🧪
+        run: npm run test:ci
+        # run: npm run test:ci:debug # Uncomment to check debug logs in CI
+        env:
+          CI: true
+
+  e2e-tests:
+    name: E2E Tests (Playwright)
+
+    needs:
+      - build
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: mcr.microsoft.com/playwright:v1.47.1-noble
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
+        with:
+          show-progress: false
+
+      - name: NPM prepare ⚙️
+        uses: ./.github/actions/npm-prepare
+
+      - name: Run Playwright tests 🎭
+        run: npm run test:e2e:headless
+        env:
+          CI: true
+          HOME: /root
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
