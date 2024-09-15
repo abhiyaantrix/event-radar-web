@@ -4,18 +4,22 @@
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.js",
     "src/**/*.jsx",
+    "src/setupTests.ts",
     "vite.config.ts",
     "tailwind.config.ts",
     "eslint.config.js",
     "postcss.config.js",
-    "prettier.config.js"
+    "prettier.config.js",
+    "commitlint.config.js",
+    "playwright.config.ts"
   ],
-  "exclude": ["commitlint.config.js", "eslint.config.js", "node_modules"]
+  "exclude": ["node_modules"]
 }

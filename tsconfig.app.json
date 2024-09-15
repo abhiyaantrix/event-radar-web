@@ -26,8 +26,9 @@
     /* Paths */
     "baseUrl": "./src",
     "rootDir": "src",
-    "outDir": "build"
+    "outDir": "dist",
+    "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

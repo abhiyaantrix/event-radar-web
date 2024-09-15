@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"]
   },
-  "include": ["vite.config.ts", "tailwind.config.ts", "commitlint.config.js"]
+  "include": ["vite.config.ts", "tailwind.config.ts", "commitlint.config.js", "playwright.config.ts"]
 }

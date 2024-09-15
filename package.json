@@ -16,6 +16,7 @@
     "lint:commit:head": "commitlint --from=HEAD~1",
     "lint:fix": "npm run prettier:fix && npm run lint:js:fix",
     "lint:js": "eslint ./src",
+    "lint:js:debug": "npm run lint:js -- --debug",
     "lint:js:fix": "eslint ./src --fix",
     "pre-commit": "lint-staged",
     "prepare": "husky",
@@ -23,6 +24,15 @@
     "prettier:fix": "prettier --write .",
     "preview": "vite preview",
     "start": "vite",
+    "test": "vitest",
+    "test:ci": "vitest --coverage --bail 10 --retry 3 --silent",
+    "test:ci:debug": "vitest --coverage --bail --debug --detectOpenHandles --runInBand --logHeapUsage",
+    "test:e2e:chrome": "playwright test --project=chrome",
+    "test:e2e:codegen": "playwright codegen",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:headless": "playwright test",
+    "test:e2e:open": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "tsc:start": "tsc --noEmit --watch"
   },
   "lint-staged": {
@@ -47,6 +57,7 @@
     ]
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -55,14 +66,20 @@
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/format": "^19.5.0",
     "@eslint/js": "^9.10.0",
+    "@faker-js/faker": "^9.0.1",
+    "@playwright/test": "^1.47.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.1.1",
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.10",
     "eslint": "^9.10.0",
@@ -76,7 +93,10 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
+    "jsdom": "^25.0.0",
     "lint-staged": "^15.2.10",
+    "msw": "^2.4.7",
+    "playwright-msw": "^3.0.1",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-packagejson": "^2.5.2",
@@ -86,7 +106,8 @@
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0",
     "vite": "^5.4.5",
-    "vite-tsconfig-paths": "^5.0.1"
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.1.1"
   },
   "engines": {
     "node": "22.x",
