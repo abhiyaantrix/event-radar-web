@@ -24,7 +24,10 @@
     "forceConsistentCasingInFileNames": true,
 
     /* Paths */
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "rootDir": "src",
+    "outDir": "build"
   },
-  "include": ["**/*.d.ts", "src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "build"]
 }
