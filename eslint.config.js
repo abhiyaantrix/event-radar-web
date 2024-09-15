@@ -15,21 +15,30 @@ export default tseslint.config(
     ignores: ['dist', 'build', 'node_modules', 'coverage', 'commitlint.config.js', 'eslint.config.js'],
   },
   js.configs.recommended,
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
   eslintPluginPrettierRecommended,
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
       globals: {
-        ...globals.browser,
-        vi: 'readonly',
+        ...globals.browser, // Common browser globals (window, document, etc.)
+        ...globals.es2021, // ECMAScript 2021 features
+        React: 'readonly', // React global (useful for JSX)
+        JSX: 'readonly', // JSX global (useful for TypeScript with JSX)
+        vi: 'readonly', // Vitest global (useful for Vitest for testing)
       },
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.eslint.json',
-        tsconfigRootDir: process.cwd(),
+        project: ['./tsconfig.node.json', './tsconfig.app.json', './tsconfig.eslint.json'],
+        tsconfigRootDir: import.meta.dirname,
+        ecmaFeatures: {
+          jsx: true,
+          impliedStrict: true,
+        },
       },
     },
     plugins: {
@@ -47,8 +56,13 @@ export default tseslint.config(
         },
       },
       'import/extensions': ['.ts', '.tsx'],
+      react: {
+        version: 'detect',
+      },
     },
     rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactPlugin.configs['jsx-runtime'].rules,
       ...reactHooksPlugin.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'no-console': 'error',
