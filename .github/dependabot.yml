@@ -1,0 +1,44 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: '[NPM] '
+      include: scope
+    labels:
+      - npm
+      - dependencies
+    groups:
+      storybook:
+        patterns:
+          - '@storybook/*'
+          - storybook
+      react-group:
+        patterns:
+          - react
+          - react-dom
+
+  # Enable version updates for Docker
+  - package-ecosystem: docker
+    directory: '/'
+    schedule:
+      interval: daily
+    commit-message:
+      prefix: '[Docker] '
+      include: scope
+    labels:
+      - docker
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: '[CI] '
+      include: scope
+    labels:
+      - github-actions
