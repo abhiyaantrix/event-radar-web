@@ -1,0 +1,8 @@
+build
+node_modules
+coverage
+index.html
+*.styles.css
+/tmp/*
+.husky
+*.svg

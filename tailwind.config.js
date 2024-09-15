@@ -8,5 +8,4 @@ import daisyui from 'daisyui';
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx,mdx}', './index.html'],
   plugins: [aspectRatioPlugin, formsPlugin, typographyPlugin, daisyui],
-}
-
+};
