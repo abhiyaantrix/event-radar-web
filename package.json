@@ -23,7 +23,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "preview": "vite preview",
-    "start": "vite",
+    "start": "vite --host",
     "test": "vitest",
     "test:ci": "vitest --coverage --bail 10 --retry 3 --silent",
     "test:ci:debug": "vitest --coverage --bail --debug --detectOpenHandles --runInBand --logHeapUsage",
