@@ -12,9 +12,13 @@
   "scripts": {
     "build": "tsc -b && vite build",
     "lint": "npm run prettier && npm run lint:js",
+    "lint:commit": "commitlint --edit",
+    "lint:commit:head": "commitlint --from=HEAD~1",
     "lint:fix": "npm run prettier:fix && npm run lint:js:fix",
     "lint:js": "eslint ./src",
     "lint:js:fix": "eslint ./src --fix",
+    "pre-commit": "lint-staged",
+    "prepare": "husky",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "preview": "vite preview",
@@ -47,6 +51,9 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/format": "^19.5.0",
     "@eslint/js": "^9.10.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
@@ -68,6 +75,8 @@
     "eslint-plugin-react-refresh": "^0.4.12",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-packagejson": "^2.5.2",

@@ -12,7 +12,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 /** @type {import('typescript-eslint').Config} */
 export default tseslint.config(
   {
-    ignores: ['dist', 'build', 'node_modules', 'coverage'],
+    ignores: ['dist', 'build', 'node_modules', 'coverage', 'commitlint.config.js', 'eslint.config.js'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
