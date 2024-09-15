@@ -16,5 +16,6 @@
     "eslint.config.js",
     "postcss.config.js",
     "prettier.config.js"
-  ]
+  ],
+  "exclude": ["commitlint.config.js", "eslint.config.js", "node_modules"]
 }
