@@ -47,6 +47,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     # Important conditions, since all following jobs depend on this job and do not check for these conditions again
     # Run for any push event or PR but skip draft PRs
     if: >-
@@ -75,6 +78,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout repository 🛎️
         uses: actions/checkout@v4
@@ -90,10 +96,15 @@ jobs:
   unit-tests:
     name: Unit Tests (Jest/RTL)
 
+    # Unit tests run via Vitest against source files directly — no build output needed.
+    # Running in parallel with build saves the full build time before tests start.
     needs:
-      - build
+      - linters
 
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository 🛎️
@@ -117,6 +128,9 @@ jobs:
       - build
 
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     container:
       image: mcr.microsoft.com/playwright:v1.58.2-noble
