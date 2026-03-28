@@ -25,11 +25,8 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       globals: {
-        ...globals.browser, // Common browser globals (window, document, etc.)
-        ...globals.es2021, // ECMAScript 2021 features
-        React: 'readonly', // React global (useful for JSX)
-        JSX: 'readonly', // JSX global (useful for TypeScript with JSX)
-        vi: 'readonly', // Vitest global (useful for Vitest for testing)
+        ...globals.browser,
+        ...globals.es2021,
       },
       parser: tseslint.parser,
       parserOptions: {
@@ -61,14 +58,13 @@ export default tseslint.config(
       },
     },
     rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...reactPlugin.configs['jsx-runtime'].rules,
       ...reactHooksPlugin.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'simple-import-sort/exports': 'error',
       'no-console': 'error',
       'prettier/prettier': 'error',
       'react-hooks/rules-of-hooks': 'error',
-      'no-multiple-empty-lines': 'error',
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
       'padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'if' },
@@ -143,16 +139,21 @@ export default tseslint.config(
           extensions: ['.tsx', '.mdx'],
         },
       ],
-      'react/jsx-uses-react': 'off',
       'react/jsx-key': [
         'error',
         {
           checkFragmentShorthand: true,
         },
       ],
-      'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'error',
       'eol-last': ['error', 'always'],
+      // Workaround: this version of @typescript-eslint crashes when these rules receive no options object
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        { allowShortCircuit: false, allowTernary: false, allowTaggedTemplates: false },
+      ],
+      '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
+      '@typescript-eslint/no-empty-function': 'off',
     },
   },
   {
@@ -165,6 +166,17 @@ export default tseslint.config(
     files: ['**/*.types.ts', 'src/types/**/*.*'],
     rules: {
       'max-lines': 'off',
+    },
+  },
+  {
+    files: ['**/*.{spec,test}.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        vi: 'readonly',
+      },
+    },
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   }
 );
