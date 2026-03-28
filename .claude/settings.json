@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint:fix)",
+      "Bash(npm test -- --run)",
+      "Bash(npm run build)",
+      "Bash(npm run test:e2e:headless)",
+      "Bash(docker-compose up --watch)"
+    ]
+  }
+}
