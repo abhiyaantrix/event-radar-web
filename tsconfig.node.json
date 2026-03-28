@@ -21,11 +21,5 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["vite/client"]
   },
-  "include": [
-    "vite.config.ts",
-    "tailwind.config.js",
-    "commitlint.config.js",
-    "playwright.config.ts",
-    "postcss.config.js"
-  ]
+  "include": ["vite.config.ts", "commitlint.config.js", "playwright.config.ts", "postcss.config.js"]
 }

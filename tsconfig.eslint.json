@@ -13,7 +13,6 @@
     "src/**/*.jsx",
     "src/setupTests.ts",
     "vite.config.ts",
-    "tailwind.config.js",
     "eslint.config.js",
     "postcss.config.js",
     "prettier.config.js",
