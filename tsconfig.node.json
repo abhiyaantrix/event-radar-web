@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2023"],
+    "target": "ESNext",
+    "lib": ["ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -17,10 +17,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"]
+    "types": ["vite/client"]
   },
-  "include": ["vite.config.ts", "tailwind.config.ts", "commitlint.config.js", "playwright.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "tailwind.config.js",
+    "commitlint.config.js",
+    "playwright.config.ts",
+    "postcss.config.js"
+  ]
 }

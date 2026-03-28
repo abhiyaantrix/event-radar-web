@@ -17,16 +17,19 @@ export default tseslint.config(
   js.configs.recommended,
   reactPlugin.configs.flat.recommended,
   reactPlugin.configs.flat['jsx-runtime'],
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  { settings: { react: { version: 'detect' } } },
   eslintPluginPrettierRecommended,
   {
     files: ['**/*.{ts,tsx}'],
+    extends: [
+      ...tseslint.configs.recommendedTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
+    ],
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.es2021,
+        ...globals.es2025,
       },
       parser: tseslint.parser,
       parserOptions: {
@@ -63,8 +66,6 @@ export default tseslint.config(
       'simple-import-sort/exports': 'error',
       'no-console': 'error',
       'prettier/prettier': 'error',
-      'react-hooks/rules-of-hooks': 'error',
-      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
       'padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'if' },
@@ -100,7 +101,6 @@ export default tseslint.config(
           ],
         },
       ],
-      'implicit-arrow-linebreak': 'off',
       'max-len': [
         'error',
         {
@@ -119,8 +119,6 @@ export default tseslint.config(
           allowForLoopAfterthoughts: true,
         },
       ],
-      'object-curly-newline': 'off',
-      'object-curly-spacing': ['error', 'always'],
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -146,7 +144,6 @@ export default tseslint.config(
         },
       ],
       'react-hooks/exhaustive-deps': 'error',
-      'eol-last': ['error', 'always'],
       // Workaround: this version of @typescript-eslint crashes when these rules receive no options object
       '@typescript-eslint/no-unused-expressions': [
         'error',

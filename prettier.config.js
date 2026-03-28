@@ -6,6 +6,7 @@ const config = {
   jsxSingleQuote: true,
   semi: true,
   trailingComma: 'es5',
+  endOfLine: 'lf',
 };
 
 export default config;

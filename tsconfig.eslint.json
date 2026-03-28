@@ -4,7 +4,6 @@
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "strictNullChecks": true,
     "types": ["vitest/globals", "vite/client", "@testing-library/jest-dom"]
   },
   "include": [
@@ -14,7 +13,7 @@
     "src/**/*.jsx",
     "src/setupTests.ts",
     "vite.config.ts",
-    "tailwind.config.ts",
+    "tailwind.config.js",
     "eslint.config.js",
     "postcss.config.js",
     "prettier.config.js",
