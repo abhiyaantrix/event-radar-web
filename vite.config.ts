@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 import * as dotenv from 'dotenv';
@@ -12,7 +13,7 @@ dotenv.config();
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), viteTsconfigPaths()],
+  plugins: [tailwindcss(), react(), viteTsconfigPaths()],
   server: {
     open: true,
     port,
