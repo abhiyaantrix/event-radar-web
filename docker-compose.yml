@@ -19,6 +19,8 @@ services:
           # - add other files and folders to not sync with container
         - action: rebuild
           path: package.json
+        - action: rebuild
+          path: package-lock.json
     environment:
       - PORT=3001
       - BROWSER=none
